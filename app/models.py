@@ -17,4 +17,17 @@ class User(SQLModel, table=True):
     password: str
     role: Role = Role.admin
 
+
+from sqlalchemy import Column, Integer, String, ForeignKey
+from database import Base
+
+class Course(Base):
+    __tablename__ = "courses"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False)
+    description = Column(String, nullable=True)
+    file = Column(String, nullable=True)
+    teacher_id = Column(Integer, ForeignKey("users.id"))
+
     
