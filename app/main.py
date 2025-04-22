@@ -43,3 +43,13 @@ def login(user: UserCreate, session: Session = Depends(get_session)):
     token = create_access_token(data={"sub": db_user.email, "role": db_user.role})
     return {"access_token": token, "token_type": "bearer"}
 
+from fastapi import FastAPI
+from routes import courses
+from database import engine, Base
+
+app = FastAPI()
+
+Base.metadata.create_all(bind=engine)
+
+app.include_router(courses.router)
+
